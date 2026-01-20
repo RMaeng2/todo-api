@@ -4,6 +4,7 @@ import com.example.todo.dto.TodoCreateRequest;
 import com.example.todo.dto.TodoResponse;
 import com.example.todo.service.TodoService;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,6 +41,12 @@ public class TodoController {
     @PatchMapping("/todos/{id}")
     public TodoResponse complete(@PathVariable Long id) {
         return todoService.complete(id);
+    }
+
+    @DeleteMapping("/todos/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        todoService.delete(id);
+        return ResponseEntity.noContent().build(); // 204
     }
 
 }
