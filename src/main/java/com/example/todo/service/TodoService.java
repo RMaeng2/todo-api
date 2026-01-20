@@ -3,8 +3,10 @@ package com.example.todo.service;
 import com.example.todo.domain.Todo;
 import com.example.todo.dto.TodoResponse;
 import com.example.todo.repository.TodoRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -31,7 +33,7 @@ public class TodoService {
     @Transactional
     public TodoResponse complete(Long id) {
         Todo todo = todoRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Todo not found" + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Todo not found" + id));
 
         todo.complete();
         return TodoResponse.from(todo);
