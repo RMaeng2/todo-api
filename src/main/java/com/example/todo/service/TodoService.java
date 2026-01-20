@@ -4,6 +4,7 @@ import com.example.todo.domain.Todo;
 import com.example.todo.dto.TodoResponse;
 import com.example.todo.repository.TodoRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,5 +26,14 @@ public class TodoService {
                 .stream()
                 .map(TodoResponse::from)
                 .toList();
+    }
+
+    @Transactional
+    public TodoResponse complete(Long id) {
+        Todo todo = todoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Todo not found" + id));
+
+        todo.complete();
+        return TodoResponse.from(todo);
     }
 }

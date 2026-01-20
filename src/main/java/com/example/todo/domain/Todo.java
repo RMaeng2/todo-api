@@ -33,4 +33,8 @@ public class Todo {
     public boolean isCompleted() {
         return completed;
     }
+
+    public void complete() {
+        this.completed = true;
+    }
 }

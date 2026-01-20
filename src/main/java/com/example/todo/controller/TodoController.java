@@ -4,10 +4,7 @@ import com.example.todo.dto.TodoCreateRequest;
 import com.example.todo.dto.TodoResponse;
 import com.example.todo.service.TodoService;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,4 +36,10 @@ public class TodoController {
     public List<TodoResponse> list() {
         return todoService.findAll();
     }
+
+    @PatchMapping("/todos/{id}")
+    public TodoResponse complete(@PathVariable Long id) {
+        return todoService.complete(id);
+    }
+
 }
