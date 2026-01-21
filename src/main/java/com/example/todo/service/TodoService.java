@@ -47,4 +47,12 @@ public class TodoService {
         todoRepository.deleteById(id);
     }
 
+    public TodoResponse findByID(Long id) {
+        Todo todo = todoRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND, "Todo not found : " + id)
+                );
+        return TodoResponse.from(todo);
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.example.todo.controller;
 
+import com.example.todo.domain.Todo;
 import com.example.todo.dto.TodoCreateRequest;
 import com.example.todo.dto.TodoResponse;
 import com.example.todo.service.TodoService;
@@ -47,6 +48,11 @@ public class TodoController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         todoService.delete(id);
         return ResponseEntity.noContent().build(); // 204
+    }
+
+    @GetMapping("/todos/{id}")
+    public TodoResponse get(@PathVariable Long id) {
+        return todoService.findByID(id);
     }
 
 }
