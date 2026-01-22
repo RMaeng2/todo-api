@@ -1,6 +1,6 @@
 package com.example.todo.controller;
 
-import com.example.todo.domain.Todo;
+//import com.example.todo.domain.Todo;
 import com.example.todo.dto.TodoCreateRequest;
 import com.example.todo.dto.TodoResponse;
 import com.example.todo.service.TodoService;

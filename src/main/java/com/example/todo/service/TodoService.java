@@ -33,7 +33,7 @@ public class TodoService {
     @Transactional
     public TodoResponse complete(Long id) {
         Todo todo = todoRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Todo not found" + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Todo not found : " + id));
 
         todo.complete();
         return TodoResponse.from(todo);
