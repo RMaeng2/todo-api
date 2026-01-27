@@ -40,6 +40,15 @@ public class TodoService {
     }
 
     @Transactional
+    public TodoResponse toggleComplete(Long id) {
+        Todo todo = todoRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Todo not found : " + id));
+
+        todo.toggleComplete();
+        return TodoResponse.from(todo);
+    }
+
+    @Transactional
     public void delete(Long id) {
         if(!todoRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Todo not found : " + id);

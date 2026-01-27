@@ -38,6 +38,10 @@ public class Todo {
         this.completed = true;
     }
 
+    public void toggleComplete() {
+        this.completed = !this.completed;
+    }
+
     public void updateTitle(String newTitle) {
         this.title = newTitle;
     }

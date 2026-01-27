@@ -133,6 +133,51 @@ public class TodoController {
         return todoService.complete(id);
     }
 
+    @PatchMapping("/todos/{id}/toggle")
+    @Operation(
+            summary = "Todo 상태 변경",
+            description = """
+                    Todo의 완료 상태를 변경합니다.
+                    
+                    ### 동작
+                    - completed = false → true (완료)
+                    - completed = true → false (취소)
+                    
+                    ### 사용 예시
+                    - UI에서 체크박스 클릭 시
+                    - 완료/미완료 상태 전환
+                    
+                    ### 에러 케이스
+                    - 존재하지 않는 ID: 404 Not Found
+                    """
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "토글 성공",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = TodoResponse.class)
+            )
+    )
+    @ApiResponse(
+            responseCode = "404",
+            description = "Todo를 찾을 수 없음",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class)
+            )
+    )
+    public TodoResponse toggleComplete(
+            @io.swagger.v3.oas.annotations.Parameter(
+                    description = "상태를 변경할 Todo의 ID",
+                    required = true,
+                    example = "1"
+            )
+            @PathVariable Long id
+    ) {
+        return todoService.toggleComplete(id);
+    }
+
     @DeleteMapping("/todos/{id}")
     @Operation(
             summary = "Todo 삭제",
