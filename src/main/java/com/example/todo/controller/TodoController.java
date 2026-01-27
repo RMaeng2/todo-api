@@ -1,8 +1,10 @@
 package com.example.todo.controller;
 
+import com.example.todo.domain.Todo;
 import com.example.todo.dto.ErrorResponse;
 import com.example.todo.dto.TodoCreateRequest;
 import com.example.todo.dto.TodoResponse;
+import com.example.todo.dto.TodoUpdateRequest;
 import com.example.todo.service.TodoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -209,12 +211,54 @@ public class TodoController {
         return todoService.findByID(id);
     }
 
-    @GetMapping("hello-api")
+    @PutMapping("/todos/{id}")
+    @Operation(
+            summary = "Todo 내용 수정",
+            description = """
+                    특정 Todo의 내용을 수정합니다.
+                    
+                    ### 요청 본문
+                    - **title**: 새로운 제목 (필수, 공백 불가)
+                    
+                    ### 주의사항
+                    - 존재하지 않는 ID: 404 Not Found
+                    - 제목이 비어있으면: 400 Bad Request
+                    """
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "수정성공",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = TodoResponse.class)
+            )
+    )
+    @ApiResponse(
+            responseCode = "400",
+            description = "잘못된 요청(제목이 비어있음)",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class)
+            )
+    )
+    public TodoResponse updateTitle(
+            @io.swagger.v3.oas.annotations.Parameter(
+                    description = "수정할 Todo의 ID",
+                    required = true,
+                    example = "1"
+            )
+            @PathVariable Long id,
+            @Valid @RequestBody TodoUpdateRequest request
+    ) {
+        return todoService.updateTitle(id, request.getTitle());
+    }
+
+    @GetMapping("/hello-api")
     @ResponseBody
     public Hello helloApi(@RequestParam("name") String name) {
         Hello hello = new Hello();
         hello.setName(name);
-        reuturn hello;
+        return hello;
     }
 
     static class Hello {

@@ -55,4 +55,14 @@ public class TodoService {
         return TodoResponse.from(todo);
     }
 
+    @Transactional
+    public TodoResponse updateTitle(Long id, String newTitle) {
+        Todo todo = todoRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Todo not found : " + id));
+
+        todo.updateTitle(newTitle);
+
+        return TodoResponse.from(todo);
+    }
+
 }

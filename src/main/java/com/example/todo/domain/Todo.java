@@ -37,4 +37,8 @@ public class Todo {
     public void complete() {
         this.completed = true;
     }
+
+    public void updateTitle(String newTitle) {
+        this.title = newTitle;
+    }
 }
