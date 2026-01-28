@@ -21,9 +21,9 @@ public class TodoService {
     }
 
     public TodoResponse create(String title, Priority priority, LocalDate dueDate) {
-        Todo todo = new Todo(title, priority, dueDate);
-        Todo saved = todoRepository.save(todo);
-        return TodoResponse.from(saved);
+        Todo todo = new Todo(title, priority, dueDate); // 새 todo 객체를 생성한다.
+        Todo saved = todoRepository.save(todo); // Repository에 저장을 요청한다.
+        return TodoResponse.from(saved); // Entity를 DTO로 변환한다.
     }
     // 불변성 유지, 생성 시점에 모든 값 설정, 더 안전함
 

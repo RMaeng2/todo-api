@@ -3,20 +3,20 @@ package com.example.todo.domain;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
-@Entity
+@Entity // DB 테이블이라는 걸 명시
 public class Todo {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id // PK
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // 자동 증가
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false) //null 허용 X
     private String title;
 
     private boolean completed = false;
 
     // 우선순위
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING) // enum을 DB에 String 타입으로 저장하겠다.
     @Column(length = 10)
     private Priority priority = Priority.MEDIUM;
 
@@ -33,7 +33,7 @@ public class Todo {
         this.dueDate = dueDate;
     }
 
-    public Long getId() {
+    public Long getId() { // id를 읽는다.
         return id;
     }
 

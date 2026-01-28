@@ -21,8 +21,8 @@ import java.util.List;
 @Tag(
         name = "Todo List API",
         description = "할 일(Todo) 관리를 위한 CRUD API입니다."
-)
-public class TodoController {
+) // Swagger UI에 쓰는 소개
+public class TodoController { // Controller 시작
 
     private final TodoService todoService;
 
@@ -71,7 +71,7 @@ public class TodoController {
                 request.getPriority(),
                 request.getDueDate()
         );
-    }
+    } // todo 생성 - service의 create
 
     @GetMapping("/todos")
     @Operation(
