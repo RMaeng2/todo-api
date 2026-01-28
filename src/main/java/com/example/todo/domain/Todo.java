@@ -1,6 +1,7 @@
 package com.example.todo.domain;
 
 import jakarta.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 public class Todo {
@@ -14,12 +15,22 @@ public class Todo {
 
     private boolean completed = false;
 
+    // 우선순위
+    @Enumerated(EnumType.STRING)
+    @Column(length = 10)
+    private Priority priority = Priority.MEDIUM;
+
+    // 마감일
+    private LocalDate dueDate;
+
     protected Todo() {
         // JPA 기본 생성자
     }
 
-    public Todo(String title) {
+    public Todo(String title, Priority priority, LocalDate dueDate) {
         this.title = title;
+        this.priority = priority != null ? priority : Priority.MEDIUM;
+        this.dueDate = dueDate;
     }
 
     public Long getId() {
@@ -32,6 +43,14 @@ public class Todo {
 
     public boolean isCompleted() {
         return completed;
+    }
+
+    public Priority getPriority() {
+        return priority;
+    }
+
+    public LocalDate getDueDate() {
+        return dueDate;
     }
 
     public void complete() {

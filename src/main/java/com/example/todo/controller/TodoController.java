@@ -66,7 +66,11 @@ public class TodoController {
                     """
     )
     public TodoResponse create(@Valid @RequestBody TodoCreateRequest request) {
-        return todoService.create(request.getTitle());
+        return todoService.create(
+                request.getTitle(),
+                request.getPriority(),
+                request.getDueDate()
+        );
     }
 
     @GetMapping("/todos")

@@ -1,5 +1,6 @@
 package com.example.todo.service;
 
+import com.example.todo.domain.Priority;
 import com.example.todo.domain.Todo;
 import com.example.todo.dto.TodoResponse;
 import com.example.todo.repository.TodoRepository;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -18,10 +20,12 @@ public class TodoService {
         this.todoRepository = todoRepository;
     }
 
-    public TodoResponse create(String title) {
-        Todo saved = todoRepository.save(new Todo(title));
+    public TodoResponse create(String title, Priority priority, LocalDate dueDate) {
+        Todo todo = new Todo(title, priority, dueDate);
+        Todo saved = todoRepository.save(todo);
         return TodoResponse.from(saved);
     }
+    // 불변성 유지, 생성 시점에 모든 값 설정, 더 안전함
 
     public List<TodoResponse> findAll() {
         return todoRepository.findAll()
